@@ -1,4 +1,6 @@
-INPUT_LENGTHS = [227,169,3,166,246,201,0,47,1,255,2,254,96,3,97,144]
+# pylint: disable = C0111
+# pylint: disable = C0103
+INPUT_LENGTHS = [227, 169, 3, 166, 246, 201, 0, 47, 1, 255, 2, 254, 96, 3, 97, 144]
 INPUT_LENGTHS_ASCII = '227,169,3,166,246,201,0,47,1,255,2,254,96,3,97,144'
 EXAMPLE_LENGTHS = [3, 4, 1, 5]
 
@@ -20,26 +22,26 @@ def reverse_circular(array, start, end):
         i += 1
 
 
-def knot_hash_function(data_array, len_array, hash_size=256, skip=0, index=0):
-    from pprint import pprint
+def knot_hash_function_round(data, len_array, hash_size=256, skip=0, index=0):
     for length in len_array:
         end = (index + length - 1) % hash_size
         if length > 0 and length <= hash_size:
-            reverse_circular(data_array, index, end)
+            reverse_circular(data, index, end)
         index = (index + length + skip) % hash_size
         skip += 1
-    result = data_array[0]*data_array[1]
-    return data_array, result, skip, index
+    result = data[0] * data[1]
+    return data, result, skip, index
 
 
-def run_full_64_rounds(len_array):
+def knot_hash_function(string):
+    # type: (str) -> str
     skip = 0
     index = 0
     data = [i for i in range(256)]
-    len_array = [ord(c) for c in len_array]
+    len_array = [ord(c) for c in string]
     len_array.extend([17, 31, 73, 47, 23])
     for i in range(64):
-        data, _, skip, index = knot_hash_function(data, len_array, 256, skip, index)
+        data, _, skip, index = knot_hash_function_round(data, len_array, 256, skip, index)
     xored = []
     for i in range(16):
         val = 0
@@ -50,12 +52,8 @@ def run_full_64_rounds(len_array):
     knot_hash = ''.join(xored_hex)
     return knot_hash
 
-
-#example_data_array = [i for i in range(5)]
-#print(knot_hash_function(example_data_array, EXAMPLE_LENGTHS, 5))
-
-data_array = [i for i in range(256)]
-array, result, _, _ = knot_hash_function(data_array, INPUT_LENGTHS)
-print("Part 1: {}".format(result))
-
-print("Part 2: {}".format(run_full_64_rounds(INPUT_LENGTHS_ASCII)))
+if __name__ == 'main':
+    data_array = [i for i in range(256)]
+    _, res, _, _ = knot_hash_function_round(data_array, INPUT_LENGTHS)
+    print("Part 1: {}".format(res))
+    print("Part 2: {}".format(knot_hash_function(INPUT_LENGTHS_ASCII)))
