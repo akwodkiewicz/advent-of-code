@@ -4,7 +4,7 @@ def calculate_checksum(filename):
         result_sum = 0
 
         for line in f.readlines():
-            min_val = math.inf
+            min_val = math.
             max_val = -math.inf
             array = line.split()
             for value in array:
