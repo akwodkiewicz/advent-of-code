@@ -1,5 +1,5 @@
 
-with open("2.txt", "r") as f:
+with open("02.txt", "r") as f:
     inp = f.read()
 
 original = [int(x) for x in inp.split(',')]

@@ -1,6 +1,6 @@
 import math
 
-with open("1.txt", "r") as f:
+with open("01.txt", "r") as f:
     inp = f.read()
 modules = [int(x) for x in inp.split()]
 fuel = [math.floor(int(x) / 3) - 2 for x in modules]
