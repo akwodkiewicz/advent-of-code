@@ -17,27 +17,19 @@ def read_input():
 
 def part_one(data):
     """Collecting answers using a set"""
-    answers_num = 0
+    yes_num = 0
     for group in data:
-        chars = set()
-        for person in group:
-            for char in person:
-                chars.add(char)
-        answers_num += len(chars)
-    return answers_num
+        answers = set(''.join(group))
+        yes_num += len(answers)
+    return yes_num
 
 def part_two(data):
     """Collecting answers using a multiset"""
-    answers_num = 0
+    yes_num = 0
     for group in data:
-        chars = Counter()
-        for person in group:
-            for char in person:
-                chars[char] += 1
-        for char in chars:
-            if chars[char] == len(group):
-                answers_num += 1
-    return answers_num
+        answers = Counter(''.join(group))
+        yes_num += len([c for c in answers if answers[c] == len(group)])
+    return yes_num
 
 
 def main():
