@@ -19,18 +19,16 @@ def part_one(data):
             return current
         buffer = buffer[1:] + [current]
 
-def part_two(data, checksum):
-    for start in range(len(data)):
-        partial = data[start]
-        for stop in range(start+1, len(data)):
+def part_two(data, target):
+    start, stop, partial = 0, 0, 0
+    while partial != target:
+        if partial < target:
             partial += data[stop]
-            if partial == checksum:
-                minimum, maximum = min(data[start:stop]), max(data[start:stop])
-                return minimum + maximum
-            elif partial < checksum:
-                continue
-            else:
-                break
+            stop += 1
+        else:
+            partial -= data[start]
+            start +=1
+    return min(data[start:stop+1]) + max(data[start:stop+1])
 
 def main():
     data = read_input()
