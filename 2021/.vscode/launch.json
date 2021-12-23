@@ -9,7 +9,8 @@
             "type": "node",
             "request": "launch",
             "args": [
-                "${relativeFile}"
+                "${relativeFile}",
+                "05/test-input"
             ],
             "runtimeArgs": [
                 "-r",
